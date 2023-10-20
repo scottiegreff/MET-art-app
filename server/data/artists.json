@@ -1,0 +1,21 @@
+[
+  {
+    "artists": "Vincent Van Gogh"
+  },
+  {
+    "artists": "Rembrandt"
+  },
+  {
+    "artists": "Edgar Degas"
+  },
+  {
+    "artists": "Paul Cezanne"
+  },
+  {
+    "artists": "Auguste Renoir",
+    "searchName": "Auguste%20Renoir"
+  },
+  {
+    "artists": "Michelle Wilson"
+  }
+]
