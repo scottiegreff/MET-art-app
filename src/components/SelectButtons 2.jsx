@@ -45,7 +45,8 @@ const SelectButtons = () => {
     e.preventDefault();
     const search = document.getElementById("search").value;
     removeAllChildNodes();
-    const artObj = await getArtObject("hasImages=true&q=" + search);
+    const searchQuerry = "hasImages=true&q=" + search
+    const artObj = await getArtObject(searchQuerry);
     for (let i = 0; i < showNumOfImages; i++) {
       await getPaintings(artObj.objectIDs[i]).then((data) => {
         displayPaintings(data);
@@ -185,6 +186,13 @@ const SelectButtons = () => {
       window.open(data.primaryImage);
     });
   }
+  // if the image is empty, get another random painting
+  // if (
+  //   data.primaryImageSmall === "" ||
+  //   data.primaryImageSmall === null
+  // ) {
+  //   handleRandomChange();
+  // } else {
 
   function removeAllChildNodes() {
     const imgContainer = document.getElementById("pri-art-container");
@@ -248,154 +256,3 @@ const SelectButtons = () => {
 
 export default SelectButtons;
 
-// searches for objects in paintings (flowers)
-// `https://collectionapi.metmuseum.org/public/collection/v1/search?q=${flowers}`
-
-// searches for arists (Auguste Renoir) that has a image of art peice (bool) in the object
-// `https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${Auguste Renoir}`
-
-// searched for the date range: dateBegin (1700), dateEnd (1800), and the geolocation (African)
-// `https://collectionapi.metmuseum.org/public/collection/v1/search?dateBegin=${1700}&dateEnd=${1800}&q=${African}`
-
-// async function handleChange(e) {
-//   const dropdownID = e.target.id;
-//   const targetName = e.target.value;
-//   removeAllChildNodes();
-
-//   if (dropdownID === "dropdownArtists") {
-//     const artObj = await getArtObject("hasImages=true&q=" + targetName);
-//     // console.log("artObj", artObj);
-//     for (let i = 0; i < showNumOfImages; i++) {
-//       await getPaintings(artObj.objectIDs[i]).then((data) => {
-//         displayPaintings(data);
-//       });
-//     }
-//   }
-//   if (dropdownID === "dropdownPeriods") {
-//     //search for first parentheses '(' in targetName
-//     const openPar = targetName.indexOf("(");
-//     //slice targetName from whitespace
-//     const date = targetName.slice(openPar + 1);
-//     // get the begin and end date from targetName
-//     const beginDate = date.substring(0, 4);
-//     // look for the hyphen in the date
-//     const hyphen = date.indexOf("-");
-//     //slice the end date from the hyphen
-//     const endDate = date.substring(hyphen + 1, hyphen + 5);
-//     // console.log("beginDate", beginDate);
-//     // console.log("enddate", endDate);
-
-//     const some = "dateBegin="+beginDate+"&dateEnd="+endDate+"&q=European";
-//     const artObj = await getArtObject(some);
-//     // "dateBegin="+beginDate+"&dateEnd="+enddate
-//     for (let i = 0; i < showNumOfImages; i++) {
-//       await getPaintings(artObj.objectIDs[i]).then((data) => {
-//         displayPaintings(data);
-//       });
-//     }
-//   }
-// }
-
-// // request the artist's paintings from an api endpoint
-// function getArtObject(artObject) {
-//   return new Promise((resolve) => {
-//     fetch(
-//       `https://collectionapi.metmuseum.org/public/collection/v1/search?${artObject}`
-//     )
-//       .then((response) => {
-//         if (!response.ok) {
-//           throw new Error(`HTTP error! Status: ${response.status}`);
-//         }
-//         return response.json();
-//       })
-//       .then((data) => {
-//         resolve(data);
-//         return data;
-//       })
-//       .catch((error) => {
-//         console.error("Error:", error);
-//       });
-//   });
-// }
-
-// // request the random painting from an api endpoint
-// function getPaintings(artIdNum) {
-//   return new Promise((resolve) => {
-//     fetch(
-//       `https://collectionapi.metmuseum.org/public/collection/v1/objects/${artIdNum}`
-//     )
-//       .then((response) => {
-//         if (!response.ok) {
-//           throw new Error(`HTTP error! Status: ${response.status}`);
-//         }
-//         return response.json();
-//       })
-//       .then((data) => {
-//         resolve(data);
-//         // console.log("data", data);
-//         return data;
-//       })
-//       .catch((error) => {
-//         console.error("Error:", error);
-//       });
-//   });
-// }
-
-// type ArtObject = {
-//   objectID: number;
-//   isHighlight: boolean;
-//   accessionNumber: string;
-//   accessionYear: string;
-//   isPublicDomain: boolean;
-//   primaryImage: string;
-//   primaryImageSmall: string;
-//   additionalImages: string[];
-//   constituents: string[];
-//   department: string;
-//   objectName: string;
-//   title: string;
-//   culture: string;
-//   period: string;
-//   dynasty: string;
-//   reign: string;
-//   portfolio: string;
-//   artistRole: string;
-//   artistPrefix: string;
-//   artistDisplayName: string;
-//   artistDisplayBio: string;
-//   artistSuffix: string;
-//   artistAlphaSort: string;
-//   artistNationality: string;
-//   artistBeginDate: string;
-//   artistEndDate: string;
-//   artistGender: string;
-//   artistWikidata_URL: string;
-//   artistULAN_URL: string;
-//   objectDate: string;
-//   objectBeginDate: number;
-//   objectEndDate: number;
-//   medium: string;
-//   dimensions: string;
-//   creditLine: string;
-//   geographyType: string;
-//   city: string;
-//   state: string;
-//   county: string;
-//   country: string;
-//   region: string;
-//   subregion: string;
-//   locale: string;
-//   locus: string;
-//   excavation: string;
-//   river: string;
-//   classification: string;
-//   rightsAndReproduction: string;
-//   linkResource: string;
-//   metadataDate: string;
-//   repository: string;
-//   objectURL: string;
-//   tags: string[];
-//   objectWikidata_URL: string;
-//   isTimelineWork: boolean;
-//   GalleryNumber: string;
-// };
